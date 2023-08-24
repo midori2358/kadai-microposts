@@ -35,4 +35,4 @@ class UserFollowController extends Controller
     }
 }
 
-}
+
