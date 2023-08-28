@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;//追記
 use App\Http\Controllers\MicropostsController; //追記
 use App\Http\Controllers\UserFollowController;  // 追記
+use App\Http\Controllers\FavoritesController;  // 追記
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +29,15 @@ Route::group(['middleware' => ['auth']],function(){
         Route::delete('unfollow', [UserFollowController::class, 'destroy'])->name('user.unfollow'); // 追記
         Route::get('followings', [UsersController::class, 'followings'])->name('users.followings'); // 追記
         Route::get('followers', [UsersController::class, 'followers'])->name('users.followers');    // 追記
-    });                                           
+        Route::get('favorites', [UsersController::class, 'favorites'])->name('users.favorites');  
+    });   
   
     Route::resource('users',UsersController::class,['only' => ['index','show']]);
     Route::resource('microposts',MicropostsController::class,['only' => ['store','destroy']]);
+    
+    Route::group(['prefix' => 'microposts/{id}'],function(){
+        Route::post('favorite', [FavoritesController::class, 'store'])->name('favorites.favorite');         // 追記
+        Route::delete('unfavorite', [FavoritesController::class, 'destroy'])->name('favorites.unfavorite'); // 追記
+       
+    });   
 });

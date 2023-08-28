@@ -58,4 +58,6 @@ class MicropostsController extends Controller
         return back()
             ->with('Delete Failed');
     }
+    
+
 }
